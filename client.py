@@ -818,7 +818,7 @@ class FairlayOrderMatching(object):
 	while 1:	
 		print 'i'
 		sessionBetBTC = requests.Session()
-		sessionBetBTC.headers.update({'Authorization': 'Token token=CHANGEME'})
+		sessionBetBTC.headers.update({'Authorization': 'Token token=6ad9ae08a79548b0b87305fd3e2351a6'})
 		'''
 		r9= sessionBetBTC.delete('https://www.betbtc.co/api/bet/3?selection=all')
 		print r9.text 
@@ -930,6 +930,8 @@ class FairlayOrderMatching(object):
 				theId = contest[0]
 				#print theId
 				found = False
+				theName = contest[6][0]['name']
+				theName2 = contest[6][1]['name']
 				with open('ids.txt', 'r') as ids:
 					for x in ids:
 						x = x.rstrip()
@@ -938,7 +940,9 @@ class FairlayOrderMatching(object):
 							found = True
 							print 'found!'
 				if not found: 
-					theName = contest[1]
+			
+					#print contest
+					
 					if contest[7] == 'Set 1 Winner':
 						r3 = sessionBetBTC.get('https://www.betbtc.co/api/market/?id=' + str(contest[0]))
 						if 'status' not in json.loads(r3.text)[0]:
@@ -948,8 +952,11 @@ class FairlayOrderMatching(object):
 							#Fairlay
 							sessionFairlay = requests.Session()
 							r4 = sessionFairlay.get('http://31.172.83.181:8080/free/markets/{"Cat":2,"OnlyActive":true,"ToID":10000}')
+							#print name
 							for contest in json.loads(r4.text):
-								if name in contest['Ru'][0]['Name']: #angel bid and lay, ask and back
+								
+								if theName in contest['Ru'][0]['Name'] and theName2 in contest['Ru'][1]['Name']: #angel bid and lay, ask and back
+									
 									if contest['_Type'] == 0 and contest['_Period'] == 2:
 						
 						
@@ -959,10 +966,10 @@ class FairlayOrderMatching(object):
 										FairlayAskVol = json.loads(contest['OrdBStr'][:-1])['Asks'][0][1] / 1000
 										FairlayBid2 = 1 / (1 - (1 / FairlayBid))
 										FairlayAsk2 = 1 / (1 - (1 / FairlayAsk))									
-										print FairlayBid
-										print FairlayAsk
-										print FairlayBid2
-										print FairlayAsk2
+										#print FairlayBid
+										#print FairlayAsk
+										#print FairlayBid2
+										#print FairlayAsk2
 										betbtc= json.loads(r3.text)	
 										for winner in betbtc:
 											if name in winner:
@@ -976,9 +983,10 @@ class FairlayOrderMatching(object):
 													lay2 = 1 / (1 - (1 / lay))
 													w1 = (1 / float(FairlayBid)) + (1 / float(lay2))
 													w2 = (1 / float(FairlayAsk2)) + (1 / float(back))
-													if w1 < .9 and w1 > .6:
+													print w1
+													if w1 < .9:
 														if w2 < w1:
-															print FairlayAskVol		
+															#print FairlayAskVol		
 															print backVol
 															print 1
 															print theName
@@ -994,7 +1002,7 @@ class FairlayOrderMatching(object):
 															bet2 = 1 / (w2 * back)
 															bVol = backVol	
 															aVol = FairlayAskVol
-															print FairlayAsk2
+															#print FairlayAsk2
 															print back
 															idealbet1 = (aVol + bVol) * bet1
 															idealbet2 = (aVol + bVol) * bet2
@@ -1043,7 +1051,7 @@ class FairlayOrderMatching(object):
 														
 															bet2 = 1 / (w1 * lay)
 															bVol = layVol	
-															print FairlayBid2
+															#print FairlayBid2
 															print lay
 															aVol = FairlayBidVol
 															idealbet1 = (aVol + bVol) * bet1
@@ -1095,10 +1103,10 @@ class FairlayOrderMatching(object):
 										FairlayAskVol = json.loads(contest['OrdBStr'][:-1])['Asks'][0][1] / 1000
 										FairlayBid2 = 1 / (1 - (1 / FairlayBid))
 										FairlayAsk2 = 1 / (1 - (1 / FairlayAsk))									
-										print FairlayBid
-										print FairlayAsk
-										print FairlayBid2
-										print FairlayAsk2
+										#print FairlayBid
+										#print FairlayAsk
+										#print FairlayBid2
+										#print FairlayAsk2
 										betbtc= json.loads(r3.text)	
 										for winner in betbtc:
 											if name in winner:
@@ -1112,9 +1120,10 @@ class FairlayOrderMatching(object):
 													lay2 = 1 / (1 - (1 / lay))
 													w1 = (1 / float(FairlayBid)) + (1 / float(lay2))
 													w2 = (1 / float(FairlayAsk2)) + (1 / float(back))
-													if w1 < .9 and w1 > .6:
+													print w1
+													if w1 < .9:
 														if w2 < w1:
-															print FairlayAskVol
+															#print FairlayAskVol
 															print backVol
 															print 3
 															print theName
@@ -1125,7 +1134,7 @@ class FairlayOrderMatching(object):
 															bet2 = 1 / (w2 * back)
 															bVol = backVol	
 															aVol = FairlayAskVol
-															print FairlayAsk2
+															#print FairlayAsk2
 															print back
 															idealbet1 = (aVol + bVol) * bet1
 															idealbet2 = (aVol + bVol) * bet2
@@ -1163,7 +1172,7 @@ class FairlayOrderMatching(object):
 																#print 'if bet2 wins: ' + str(bet2) + ' * ' + str(back) + ' - ' + str(bet1) + ' - ' + str(bet2) + ' = ' + str(bet2 * back - bet1 - bet2)
 														else:	
 															print 4
-															print FairlayBidVol	
+															#print FairlayBidVol	
 															print layVol
 															print theName
 															print contest['Title']
@@ -1173,7 +1182,7 @@ class FairlayOrderMatching(object):
 															bet2 = 1 / (w1 * lay)
 															bVol = layVol	
 															aVol = FairlayBidVol
-															print FairlayBid2
+															#print FairlayBid2
 															print lay
 															idealbet1 = (aVol + bVol) * bet1
 															idealbet2 = (aVol + bVol) * bet2
@@ -1223,7 +1232,7 @@ class FairlayOrderMatching(object):
 							r4 = sessionFairlay.get('http://31.172.83.181:8080/free/markets/{"Cat":2,"OnlyActive":true,"ToID":10000}')
 							for contest in json.loads(r4.text):
 								#print 
-								if name in contest['Ru'][0]['Name']: #angel wins:
+								if theName in contest['Ru'][0]['Name'] and theName2 in contest['Ru'][1]['Name']: #angel wins:
 									if contest['_Type'] == 0 and contest['_Period'] == 1:
 										if "Bids" in contest['OrdBStr']:
 					
@@ -1234,10 +1243,10 @@ class FairlayOrderMatching(object):
 											FairlayAskVol = json.loads(contest['OrdBStr'][:-1])['Asks'][0][1] / 1000
 											FairlayBid2 = 1 / (1 - (1 / FairlayBid))
 											FairlayAsk2 = 1 / (1 - (1 / FairlayAsk))
-											print FairlayBid
-											print FairlayAsk
-											print FairlayBid2
-											print FairlayAsk2
+											#print FairlayBid
+											#print FairlayAsk
+											#print FairlayBid2
+											#print FairlayAsk2
 											betbtc= json.loads(r3.text)	
 											for winner in betbtc:
 												if name in winner:
@@ -1251,7 +1260,8 @@ class FairlayOrderMatching(object):
 														lay2 = 1 / (1 - (1 / lay))
 														w1 = (1 / float(FairlayBid)) + (1 / float(lay2))
 														w2 = (1 / float(FairlayAsk2)) + (1 / float(back))
-														if w1 < .9 and w1 > .6:
+														print w1
+														if w1 < .9:
 															if w2 < w1:
 															
 																print 5
@@ -1266,7 +1276,7 @@ class FairlayOrderMatching(object):
 															
 																bet2 = 1 / (w2 * back)
 																bVol = backVol	
-																print FairlayAsk2
+																#print FairlayAsk2
 																print back
 																aVol = FairlayAskVol
 																idealbet1 = (aVol + bVol) * bet1
@@ -1301,7 +1311,7 @@ class FairlayOrderMatching(object):
 																								
 																bet12 = (bet1 * FairlayAsk) / FairlayAsk2
 																bet21 = (bet2 * lay) / lay2
-	#0.221 # 0.11713 / .221														print FairlayAsk
+	#0.221 # 0.11713 / .221														#print FairlayAsk
 	#															print back
 																if (bet12 * 1000) > 1:
 														
@@ -1319,7 +1329,7 @@ class FairlayOrderMatching(object):
 																	#print 'if bet1 wins: ' + str(bet1) + ' * ' + str(FairlayAsk) + ' - ' + str(bet1) + ' - ' + str(bet2) + ' = ' + str(bet1 * FairlayAsk - bet1 - bet2)
 																	#print 'if bet2 wins: ' + str(bet2) + ' * ' + str(back) + ' - ' + str(bet1) + ' - ' + str(bet2) + ' = ' + str(bet2 * back - bet1 - bet2)
 															else:
-																print FairlayBidVol
+																#print FairlayBidVol
 																print layVol
 																print 6
 																print theName
@@ -1330,7 +1340,7 @@ class FairlayOrderMatching(object):
 															
 																bet2 = 1 / (w1 * lay)
 																bVol = layVol	
-																print FairlayBid2
+																#print FairlayBid2
 																print lay
 																aVol = FairlayBidVol
 																idealbet1 = (aVol + bVol) * bet1
@@ -1381,10 +1391,10 @@ class FairlayOrderMatching(object):
 											FairlayAskVol = json.loads(contest['OrdBStr'][:-1])['Asks'][0][1] / 10002
 											FairlayBid2 = 1 / (1 - (1 / FairlayBid))
 											FairlayAsk2 = 1 / (1 - (1 / FairlayAsk))
-											print FairlayBid
-											print FairlayAsk
-											print FairlayBid2
-											print FairlayAsk2
+											#print FairlayBid
+											#print FairlayAsk
+											#print FairlayBid2
+											#print FairlayAsk2
 											betbtc= json.loads(r3.text)	
 											for winner in betbtc:
 												if name in winner:
@@ -1398,9 +1408,10 @@ class FairlayOrderMatching(object):
 														lay2 = 1 / (1 - (1 / lay))
 														w1 = (1 / float(FairlayBid)) + (1 / float(lay2))
 														w2 = (1 / float(FairlayAsk2)) + (1 / float(back))
-														if w1 < .9 and w1 > .6:
+														print w1
+														if w1 < .9:
 															if w2 < w1:
-																print FairlayAskVol
+																#print FairlayAskVol
 																print backVol
 																print 7
 																print theName
@@ -1412,7 +1423,7 @@ class FairlayOrderMatching(object):
 																bet2 = 1 / (w2 * back)	
 																bVol = backVol	
 																aVol = FairlayAskVol
-																print FairlayAsk2
+																#print FairlayAsk2
 																print back
 																idealbet1 = (aVol + bVol) * bet1
 																idealbet2 = (aVol + bVol) * bet2
@@ -1452,7 +1463,7 @@ class FairlayOrderMatching(object):
 																	#print 'if bet2 wins: ' + str(bet2) + ' * ' + str(back) + ' - ' + str(bet1) + ' - ' + str(bet2) + ' = ' + str(bet2 * back - bet1 - bet2)
 															else:
 																print 8
-																print FairlayBidVol
+																#print FairlayBidVol
 																print layVol
 																print theName
 																print contest['Title']
@@ -1461,7 +1472,7 @@ class FairlayOrderMatching(object):
 															
 																bet2 = 1 / (w1 * lay)
 																bVol = layVol
-																print FairlayBid2
+																#print FairlayBid2
 																print lay	
 																aVol = FairlayBidVol
 																idealbet1 = (aVol + bVol) * bet1

@@ -819,7 +819,7 @@ class FairlayOrderMatching(object):
 	while 1:	
 		print 'i'
 		sessionBetBTC = requests.Session()
-		sessionBetBTC.headers.update({'Authorization': 'Token token=CHANGEME'})
+		sessionBetBTC.headers.update({'Authorization': 'Token token=6ad9ae08a79548b0b87305fd3e2351a6'})
 		'''
 		r9= sessionBetBTC.delete('https://www.betbtc.co/api/bet/3?selection=all')
 		print r9.text 
