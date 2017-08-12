@@ -1,0 +1,17 @@
+1. https://fairlay.com/api/
+2. https://betbtc.zendesk.com/hc/en-us/sections/201042322-Betting-API-
+3. https://www.pinnacle.com/en/api
+4. http://betdaqtraders.com/what-web-methods-are-available/
+5. http://smarkets.github.io/smk_api_docs/
+6. https://developer.betfair.com/
+7. https://developers.matchbook.com/
+
+Afaik Fairlay uses Pinnacle odds, so they should be (for the most part) equal. The question then becomes 'who opposes arb?'
+
+1. Fairlay supports arb
+2. BetBTC supports arb
+3. https://www.pinnacle.com/en/promotions/arbitrage-friendly
+4. http://www.betdaqtips.com/what-is-arb-betting-betdaq-explains/
+5. https://help.smarkets.com/hc/en-gb/articles/115002115965-What-is-Smarkets-
+6. https://betting.betfair.com/what-is-arbing-arb-betting-explained.html
+7. https://insights.matchbook.com/money-nothing-aribtrage-explained/
