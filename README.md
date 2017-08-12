@@ -26,7 +26,7 @@ where Token token=xyz is your token in the above link.
 run python client_dryrun.py and it'll generate you an SSH key to put into the other exchange, Fairlay.
 
 python client_dryrun.py 
-===================================================================
+
 It appears that you don't have a config file, so we created
 a new one with a brand new key pair.
 
@@ -39,7 +39,6 @@ Account with the following public key:
 
 ** Don't forget to to change ID and APIAccountID fields in
    the config.txt file.
-===================================================================
 
 So we head over to Fairlay, sign up then visit this page: 
 
